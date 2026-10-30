@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ตรวจสอบผลการเรียนรายบุคคลและเกณฑ์การตัดเกรดสำหรับนักศึกษา">
+  <title>ผลการเรียนของฉัน | Student Grade</title>
+  <link rel="stylesheet" href="styles.css"><script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="./"><span class="brand-icon" aria-hidden="true">✦</span><span>Student Grade<small>ระบบตรวจสอบผลการเรียน</small></span></a><span class="tag">สำหรับนักศึกษา</span></header>
+  <main>
+    <section class="intro"><span class="eyebrow">YOUR LEARNING, YOUR PROGRESS</span><h1>ทุกความตั้งใจ<br>มี<span>ผลลัพธ์ให้ติดตาม</span></h1><p>ตรวจสอบเกณฑ์การตัดเกรด แล้วค้นหาผลการเรียนของคุณ<br class="desktop">ด้วยรหัสประจำตัวนักศึกษาได้ที่นี่</p><div class="intro-art" aria-hidden="true"><span class="orb orb-pink"></span><span class="orb orb-blue"></span><div class="art-card"><span>MY PROGRESS</span><strong>A<span>✧</span></strong><div class="art-line"></div><div class="art-line short"></div><i>Keep growing ↗</i></div><span class="spark">✦</span></div></section>
+    <section class="criteria panel" aria-labelledby="criteria-title"><div class="section-heading"><span class="step">01</span><div><p class="eyebrow">GRADING CRITERIA</p><h2 id="criteria-title">เกณฑ์การตัดเกรด</h2></div><span class="pill">แบบอิงเกณฑ์</span></div><p class="section-description">ช่วงคะแนนสำหรับประเมินผลการเรียน จากคะแนนเต็ม 100 คะแนน</p>
+      <div class="grade-grid">
+        <div class="grade grade-a"><strong>A</strong><span>80–100</span><small>คะแนน</small></div>
+        <div class="grade grade-b"><strong>B+</strong><span>75–79</span><small>คะแนน</small></div>
+        <div class="grade grade-b"><strong>B</strong><span>70–74</span><small>คะแนน</small></div>
+        <div class="grade grade-c"><strong>C+</strong><span>65–69</span><small>คะแนน</small></div>
+        <div class="grade grade-c"><strong>C</strong><span>60–64</span><small>คะแนน</small></div>
+        <div class="grade grade-d"><strong>D+</strong><span>55–59</span><small>คะแนน</small></div>
+        <div class="grade grade-d"><strong>D</strong><span>50–54</span><small>คะแนน</small></div>
+        <div class="grade grade-f"><strong>F</strong><span>ต่ำกว่า 50</span><small>คะแนน</small></div>
+      </div><p class="note">ⓘ ใช้เกณฑ์ตามภาพที่ให้มา โดยกำหนด F ต่ำกว่า 50 คะแนน ทั้งนี้ให้ยึดประกาศของอาจารย์ประจำวิชาเป็นหลัก</p>
+    </section>
+    <section class="lookup panel" aria-labelledby="lookup-title"><div class="section-heading"><span class="step blue">02</span><div><p class="eyebrow">STUDENT LOOKUP</p><h2 id="lookup-title">ค้นหาผลการเรียนของคุณ</h2></div></div><p class="section-description">กรอกรหัสประจำตัวนักศึกษา เพื่อแสดงรายละเอียดคะแนนรายบุคคล</p>
+      <form id="lookup-form"><label for="student-id">รหัสประจำตัวนักศึกษา</label><div class="input-row"><input id="student-id" name="studentId" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="30" pattern="[A-Za-z0-9\-]{4,30}" placeholder="กรอกรหัสนักศึกษาของคุณ" required aria-describedby="input-help"><button id="submit-button" type="submit">ดูผลการเรียน <span aria-hidden="true">↗</span></button></div><small id="input-help">กรอกรหัสให้ครบ รวมเลข 0 ด้านหน้า (ถ้ามี)</small></form>
+      <p id="status" role="status" aria-live="polite"></p><div id="empty-state" class="empty-state"><span aria-hidden="true">⌕</span><p>ผลการเรียนของคุณจะแสดงที่นี่</p><small>เริ่มต้นด้วยการกรอกรหัสนักศึกษาด้านบน</small></div>
+      <section id="results" hidden aria-labelledby="result-title"><div class="result-heading"><div><span class="eyebrow">YOUR RESULTS</span><h3 id="result-title">รายละเอียดผลการเรียน</h3></div><button class="clear-button" id="clear-button" type="button">ล้างข้อมูล</button></div><p class="result-note">ข้อมูลจาก Sheet2 • คะแนนรวมและเกรดแสดงตามที่อาจารย์บันทึกในชีต</p><dl id="result-fields"></dl></section>
+    </section>
+    <p class="privacy">แสดงเฉพาะข้อมูลที่ตรงกับรหัสที่ค้นหา • กรุณาใช้รหัสของตนเอง และล้างข้อมูลเมื่อใช้งานเสร็จ</p>
+  </main><footer><span>✦ Student Grade</span><small>พื้นที่เล็ก ๆ สำหรับติดตามการเรียนรู้ของคุณ</small></footer>
+</body></html>
+
