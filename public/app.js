@@ -5,8 +5,32 @@ const status = document.querySelector('#status');
 const results = document.querySelector('#results');
 const empty = document.querySelector('#empty-state');
 const fields = document.querySelector('#result-fields');
+const details = document.querySelector('#student-details');
+const summary = document.querySelector('#summary-fields');
 let pending = false;
-function clearResults() { results.hidden = true; fields.replaceChildren(); empty.hidden = false; status.textContent = ''; status.className = ''; }
+function clearResults() { results.hidden = true; fields.replaceChildren(); details.replaceChildren(); summary.replaceChildren(); empty.hidden = false; status.textContent = ''; status.className = ''; }
+function renderFields(items) {
+  for (const field of items) {
+    const match = field.label.match(/^(.*?)\s*\(เต็ม\s+([^)]*)\)$/);
+    const title = match ? match[1].trim() : field.label;
+    const max = match?.[2];
+    const row = document.createElement('div'); row.className = 'field';
+    const label = document.createElement('dt'); label.textContent = title;
+    const value = document.createElement('dd');
+    const blank = field.value === '';
+    const identity = /^(รหัสนักศึกษา|รหัสประจำตัวนักศึกษา|ชื่อ[-–]นามสกุล)$/.test(title);
+    const total = title === 'คะแนนรวม'; const grade = title === 'เกรด';
+    value.textContent = blank ? (max && !identity && !total ? `—/${max}` : 'ยังไม่มีข้อมูล') : `${field.value}${max && !identity && !total ? `/${max}` : ''}`;
+    if (blank) row.classList.add('unrecorded');
+    if (identity) { row.classList.add('identity'); details.append(row); }
+    else if (total || grade) {
+      row.classList.add(total ? 'total' : 'final-grade');
+      if(total) label.textContent = 'คะแนนรวมปัจจุบัน';
+      summary.append(row);
+    } else fields.append(row);
+    row.append(label, value);
+  }
+}
 input.addEventListener('input', clearResults);
 document.querySelector('#clear-button').addEventListener('click', () => { clearResults(); input.value = ''; input.focus(); });
 window.addEventListener('pageshow', clearResults);
@@ -19,12 +43,7 @@ form.addEventListener('submit', async event => {
     const data = await response.json();
     if (!response.ok) throw new Error(data.message || 'ไม่สามารถค้นหาข้อมูลได้');
     if (!Array.isArray(data.fields)) throw new Error('รูปแบบข้อมูลไม่ถูกต้อง กรุณาติดต่ออาจารย์');
-    for (const field of data.fields) {
-      const row = document.createElement('div'); row.className = 'field';
-      const label = document.createElement('dt'); label.textContent = field.label;
-      const value = document.createElement('dd'); value.textContent = field.value === '' ? 'ยังไม่มีข้อมูล' : field.value;
-      row.append(label, value); fields.append(row);
-    }
+    renderFields(data.fields);
     results.hidden = false; status.textContent = 'พบข้อมูลผลการเรียนของรหัสที่ค้นหา'; status.className = 'success';
   } catch (error) {
     status.textContent = error.name === 'TimeoutError' ? 'การเชื่อมต่อใช้เวลานาน กรุณาลองใหม่อีกครั้ง' : (error instanceof TypeError || error instanceof SyntaxError) ? 'ไม่สามารถเชื่อมต่อระบบได้ กรุณาลองใหม่ภายหลัง' : error.message;
